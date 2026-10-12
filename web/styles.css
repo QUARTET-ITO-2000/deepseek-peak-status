@@ -985,10 +985,30 @@ body {
 
 .board--status {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(220px, 29%, 300px);
+  align-items: center;
+  gap: clamp(12px, 3vw, 28px);
   overflow: hidden;
   padding: clamp(22px, 4vw, 34px);
   border: 1px solid color-mix(in srgb, var(--card-unknown-accent) 22%, transparent);
   box-shadow: 0 18px 45px rgba(31, 83, 108, 0.09);
+}
+
+.status-content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.status-mascot {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(35, 79, 110, 0.12));
 }
 
 .board--status::after {
@@ -1118,4 +1138,14 @@ body {
 @media (max-width: 560px) {
   .page-header { padding-top: 26px; }
   .character-credit { padding: 18px; }
+  .board--status {
+    grid-template-columns: minmax(0, 1fr) minmax(88px, 28%);
+    gap: 8px;
+  }
+  .status-mascot { max-height: 150px; }
+}
+
+@media (max-width: 380px) {
+  .board--status { grid-template-columns: minmax(0, 1fr) 76px; }
+  .status-mascot { max-height: 118px; }
 }

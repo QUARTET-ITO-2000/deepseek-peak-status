@@ -127,6 +127,7 @@ deepseek-peak-status/
 ├── web/                         # the deployable site — publish this one directory
 │   ├── index.html               # the shell; Chinese text is present without JS
 │   ├── styles.css               # tokens for both schemes, no webfont
+│   ├── assets/                  # status-card whale-girl illustrations
 │   ├── data/                    # the bundled holiday fallback, refreshed daily
 │   └── src/
 │       ├── sources.js           # the compiled peak-hours rule, and the holiday source
@@ -174,5 +175,7 @@ No. See [Not affiliated with DeepSeek](#not-affiliated-with-deepseek). The holid
 ## License
 
 Released under the [MIT License](LICENSE).
+
+The whale-girl illustrations in `web/assets/` are derivative works based on the original character by 上善无形. They are provided under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) for non-commercial use, with attribution on the site; that license applies to the illustrations, not the source code.
 
 Copyright © 2026 QUARTETTO D'ARCHI

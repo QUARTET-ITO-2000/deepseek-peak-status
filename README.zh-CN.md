@@ -127,6 +127,7 @@ deepseek-peak-status/
 ├── web/                         # 可发布的站点 —— 发布这一个目录
 │   ├── index.html               # 外壳；不跑 JS 也有中文文案
 │   ├── styles.css               # 两套配色方案的 token，不加载任何网络字体
+│   ├── assets/                  # 状态卡片使用的鲸鱼娘插画
 │   ├── data/                    # 随包的节假日兜底数据，每日刷新
 │   └── src/
 │       ├── sources.js           # 编译进页面的高峰规则，以及节假日数据源
@@ -174,5 +175,7 @@ deepseek-peak-status/
 ## 许可证
 
 以 [MIT 许可证](LICENSE) 发布。
+
+`web/assets/` 中的鲸鱼娘插画是基于上善无形原创角色的二创，依 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 非商业使用，署名见网站页面。该协议适用于插画，不适用于源代码。
 
 Copyright © 2026 QUARTETTO D'ARCHI
