@@ -44,16 +44,17 @@
 <footer class="page-footer">
   <section class="character-credit" aria-labelledby="character-credit-title">
     <div class="character-credit__heading">
-      <span class="character-credit__mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" focusable="false">
+      <button type="button" class="character-credit__mark" id="tail-easter-egg" aria-label="鲸鱼娘尾巴彩蛋" aria-expanded="false" aria-controls="tail-easter-egg-message">
+        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
           <path d="M12 21c-.8-4.3-2.8-7.1-7.4-8.6C2.2 11.6 1 8.9 2 6c4.4.2 7.8 2.1 10 5.4C14.2 8.1 17.6 6.2 22 6c1 2.9-.2 5.6-2.6 6.4C14.8 13.9 12.8 16.7 12 21Z" />
         </svg>
-      </span>
+      </button>
       <div>
       <p class="character-credit__eyebrow" data-i18n="credit.eyebrow">CHARACTER · ATTRIBUTION</p>
         <h2 id="character-credit-title" data-i18n="credit.title">鲸鱼娘形象与授权说明</h2>
       </div>
     </div>
+    <p class="character-credit__easter-egg" id="tail-easter-egg-message" role="status" aria-live="polite" hidden></p>
     <p><span data-i18n="credit.attribution">角色原型：上善无形原创 OC「鲸鱼娘」（原帖：</span> <a href="https://www.bilibili.com/opus/1231977657712771073" target="_blank" rel="noopener noreferrer">bilibili.com/opus/1231977657712771073</a><span data-i18n="credit.attributionEnd">）。原作者声明欢迎署名、非商业二创，并要求衍生作品以相同方式共享。</span></p>
     <p><span data-i18n="credit.reference">直接视觉参考：ZipZipPipe 创作的四张鲸鱼娘二创图，收录于</span> <a href="https://www.pixiv.net/en/artworks/148349094" target="_blank" rel="noopener noreferrer" data-i18n="credit.referenceLink">Pixiv 合集</a><span data-i18n="credit.referenceEnd">。本站状态插画基于这些参考图及上述原创角色进行改编。</span></p>
     <details class="character-credit__prompt">
@@ -73,6 +74,9 @@
   </p>
 </footer>
 
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ca53f8a48a2c498383e92d88c1ab8cd5"}'></script>
+<!-- End Cloudflare Web Analytics -->
 <script type="module" src="src/ui/app.js"></script>
 </body>
 </html>

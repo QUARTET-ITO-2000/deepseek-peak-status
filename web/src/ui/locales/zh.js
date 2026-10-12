@@ -12,6 +12,11 @@ export default {
 
   'credit.eyebrow': '角色 · 版权署名',
   'credit.title': '鲸鱼娘形象与授权说明',
+  'credit.easterEggLabel': '点尾巴听鲸鱼娘说句话',
+  'credit.easterEgg1': '尾巴巡检报告：今天也在平稳遨游。',
+  'credit.easterEgg2': '给你的下一次提问，送上一朵好运浪花。',
+  'credit.easterEgg3': '海很宽广，Token 预算有限。',
+  'credit.easterEgg4': '鲸鱼娘向你打个招呼，感谢来访！',
   'credit.attribution': '角色原型：上善无形原创 OC「鲸鱼娘」（原帖：',
   'credit.attributionEnd': '）。原作者声明欢迎署名、非商业二创，并要求衍生作品以相同方式共享。',
   'credit.reference': '直接视觉参考：ZipZipPipe 基于上述原创角色创作的四张鲸鱼娘二创图，收录于',

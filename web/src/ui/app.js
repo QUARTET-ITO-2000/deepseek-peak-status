@@ -96,7 +96,10 @@ const refreshButton = document.getElementById('refresh-button');
 const footerDisclaimer = document.getElementById('footer-disclaimer');
 const footerNote = document.getElementById('footer-unknown');
 const footerMeta = document.getElementById('footer-meta');
+const tailEasterEggButton = document.getElementById('tail-easter-egg');
+const tailEasterEggMessage = document.getElementById('tail-easter-egg-message');
 const sourceStrip = document.getElementById('source-strip');
+let lastEasterEggMessageKey = null;
 
 const legendList = el('ul', { class: 'legend' });
 const legendConvention = el('p', { class: 'legend-convention' });
@@ -375,6 +378,10 @@ function renderChrome(view) {
   pageTagline.textContent = i18n.t('app.tagline');
   languageButton.textContent = i18n.t('app.languageSwitch');
   languageButton.setAttribute('aria-label', i18n.t('app.languageSwitchLabel'));
+  tailEasterEggButton.setAttribute('aria-label', i18n.t('credit.easterEggLabel'));
+  if (tailEasterEggButton.getAttribute('aria-expanded') === 'true' && lastEasterEggMessageKey != null) {
+    tailEasterEggMessage.textContent = i18n.t(lastEasterEggMessageKey);
+  }
   updateRefreshButton();
 
   footerDisclaimer.textContent = i18n.t('footer.disclaimer');
@@ -525,6 +532,22 @@ languageButton.addEventListener('click', () => {
   i18n.setLanguage(i18n.otherLanguage);
   preferences.writeLanguage(i18n.language);
   render();
+});
+
+tailEasterEggButton.addEventListener('click', () => {
+  const isOpen = tailEasterEggButton.getAttribute('aria-expanded') === 'true';
+  tailEasterEggButton.setAttribute('aria-expanded', String(!isOpen));
+  tailEasterEggMessage.hidden = isOpen;
+  if (isOpen) return;
+
+  const messages = Array.from({ length: 4 }, (_, index) => `credit.easterEgg${index + 1}`);
+  let messageKey = messages[Math.floor(Math.random() * messages.length)];
+  if (messages.length > 1 && messageKey === lastEasterEggMessageKey) {
+    const alternatives = messages.filter((key) => key !== lastEasterEggMessageKey);
+    messageKey = alternatives[Math.floor(Math.random() * alternatives.length)];
+  }
+  lastEasterEggMessageKey = messageKey;
+  tailEasterEggMessage.textContent = i18n.t(messageKey);
 });
 
 refreshButton.addEventListener('click', () => {

@@ -13,6 +13,11 @@ export default {
 
   'credit.eyebrow': 'CHARACTER · ATTRIBUTION',
   'credit.title': 'Whale-girl character & licensing',
+  'credit.easterEggLabel': 'Ask the whale-girl for a message',
+  'credit.easterEgg1': 'Tail report: all systems are swimming smoothly.',
+  'credit.easterEgg2': 'A little splash of luck for your next prompt.',
+  'credit.easterEgg3': 'The sea is vast. Your token budget is finite.',
+  'credit.easterEgg4': 'Whale, hello there! Thanks for stopping by.',
   'credit.attribution': 'Character: the original whale-girl OC by 上善无形 (original post:',
   'credit.attributionEnd': '). The creator welcomes attributed, non-commercial fan works and requires adaptations to be shared alike.',
   'credit.reference': 'Direct visual references: four whale-girl fan illustrations by ZipZipPipe, based on the original character above, collected in this',
