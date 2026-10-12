@@ -367,6 +367,9 @@ function midnightOf(now, timeZone) {
 
 function renderChrome(view) {
   document.documentElement.lang = i18n.language === 'zh' ? 'zh-Hans' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach((node) => {
+    node.textContent = i18n.t(node.dataset.i18n);
+  });
   pageTitle.textContent = i18n.t('app.title');
   pageTagline.textContent = i18n.t('app.tagline');
   languageButton.textContent = i18n.t('app.languageSwitch');
