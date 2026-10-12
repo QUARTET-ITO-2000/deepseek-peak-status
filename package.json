@@ -1,0 +1,13 @@
+{
+  "name": "deepseek-peak-status",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A static, dependency-free page showing whether DeepSeek is currently in peak pricing hours.",
+  "license": "MIT",
+  "scripts": {
+    "check-rule": "node tools/check-rule.mjs",
+    "snapshot": "node tools/snapshot.mjs",
+    "serve": "python3 -m http.server 8765"
+  }
+}

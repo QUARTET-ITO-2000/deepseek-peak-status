@@ -1,0 +1,51 @@
+name: review official peak-hours rule
+
+# DeepSeek publishes this rule as prose, not machine-readable data. This
+# workflow opens a human review issue every quarter; it never edits the rule.
+on:
+  schedule:
+    - cron: '17 0 1 1,4,7,10 *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Open a review issue if none is already open
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          title='Quarterly review: DeepSeek peak-hours rule'
+          open_issue=$(gh issue list --state open --limit 100 --json title --jq 'any(.[]; .title == "Quarterly review: DeepSeek peak-hours rule")')
+
+          if [ "$open_issue" = "true" ]; then
+            echo "An official-rule review issue is already open; skipping duplicate."
+            exit 0
+          fi
+
+          transcribed_on=$(sed -n "s/.*transcribedOn: '\([^']*\)'.*/\1/p" web/src/sources.js)
+          if [ -z "$transcribed_on" ]; then
+            echo "Could not read OfficialRule.transcribedOn from web/src/sources.js" >&2
+            exit 1
+          fi
+
+          cat > "$RUNNER_TEMP/review-body.md" <<EOF
+          Please compare the peak-hours rule in this repository with the [official DeepSeek pricing page](https://api-docs.deepseek.com/quick_start/pricing).
+
+          The repository currently records its last manual check as **$transcribed_on**. This reminder does not detect changes on the official page; a person must read and compare the published rule.
+
+          Review steps:
+          1. Compare the official peak periods with the two windows in `web/src/sources.js`.
+          2. If the rule changed, update `OfficialRule.calendar` and `OfficialRule.transcribedOn`. Keep weekday and holiday handling in `web/src/models/off-peak-calendar.js` unless the date policy itself changed.
+          3. Run `npm run check-rule` and review its UTC and Beijing-time output against the official page.
+          4. Close this issue after the comparison is complete. If the source cannot be checked, leave it open and add a comment explaining why.
+          EOF
+
+          gh issue create --title "$title" --body-file "$RUNNER_TEMP/review-body.md"

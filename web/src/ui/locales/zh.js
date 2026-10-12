@@ -1,0 +1,124 @@
+/**
+ * Chinese strings. The default language.
+ *
+ * Holiday names are never translated: they are quoted verbatim from the data
+ * source, exactly as the app does. Only the sentences around them are localized.
+ */
+export default {
+  'app.title': 'DeepSeek 峰谷状态',
+  'app.tagline': '第三方查询页 · 与 DeepSeek 官方无关联',
+  'app.languageSwitch': 'EN',
+  'app.languageSwitchLabel': '切换到英文',
+
+  'status.headline.offPeak': '空闲',
+  'status.headline.peak': '高峰',
+  'status.headline.unknown': '无法验证',
+  'status.detail.offPeak': '当前按标准价格计费',
+  'status.detail.peak': '当前按约 2 倍价格计费',
+  'status.detail.unknown': '排期无法验证，请勿据此判断价格',
+  'status.headline.checking': '正在核对',
+  'status.detail.checking': '正在核对节假日安排，判断稍后给出',
+
+  'status.degraded.badge': '解析降级',
+  'status.degraded.detail': '排期解析出现问题，空闲结论仅供参考；高峰结论不受影响。',
+
+  'status.remaining': '距本段高峰结束',
+  'status.nextPeak': '距下次高峰开始',
+  'status.windowRange': '本段高峰 {start}–{end}',
+  'status.beijingNow': '北京时间',
+  'status.localNow': '当地时间',
+
+  'timeline.title': '今日 24 小时时间轴',
+  'timeline.hint': '按访客本地日历日绘制；每个整点刻度同时标注当地时间（上）与北京时间（下）',
+  'timeline.aria': '今日 24 小时时间轴：高峰时段标红并带斜纹，其余为空闲，竖直虚线为当前时刻。',
+  'timeline.dayCaption': '{date} {weekday}（当地时间）',
+  'timeline.axisLocal': '当地时间',
+  'timeline.axisBeijing': '北京时间',
+  'timeline.windowTitle': '{start}–{end} · {state}',
+  'timeline.now': '现在',
+  'timeline.empty': '本日没有高峰窗口',
+  'timeline.tableCaption': '今日高峰窗口起止与时长',
+  'timeline.tableStart': '开始',
+  'timeline.tableEnd': '结束',
+  'timeline.tableDuration': '时长',
+  'timeline.tableState': '状态',
+
+  'heatmap.title': '未来 14 天热力日历',
+  'heatmap.hint': '按北京日历日绘制：每列一天，每行一小时。整列变灰即为「整天抑制」。',
+  'heatmap.aria': '未来 14 天热力日历：每列为一个北京日历日，每行为一小时；高峰格标红并带斜纹，整列灰色表示该北京日全天按空闲计费。',
+  'heatmap.today': '今天',
+  'heatmap.cellTitle': '{date} 北京 {hour}:00–{nextHour}:00 · {state}',
+
+  'transitions.title': '下次切换',
+  'transitions.hint': '高峰窗口按当地时间；「全天空闲」按北京日历日。',
+  'transitions.enterPeak': '{when} 进入高峰，持续 {duration}',
+  'transitions.leavePeak': '{when} 高峰结束',
+  'transitions.suppressedDay': '{date}（北京日）全天空闲（{reason}）',
+  'transitions.none': '展开范围内没有高峰窗口',
+  'transitions.today': '今天',
+  'transitions.tomorrow': '明天',
+
+  'legend.peak': '高峰',
+  'legend.offPeak': '空闲',
+  'legend.unknown': '未知',
+  'legend.suppressed': '整天抑制',
+  'legend.now': '现在',
+  'legend.convention':
+    '两块的「今天」定义不同，这是有意的：时间轴按访客本地日历日绘制，热力日历按北京日历日绘制。对北美访客来说，同一个「今天」并不重合。',
+
+  'controls.applyChinaRule': '应用中国空闲规则（周末与法定节假日）',
+  'controls.applyChinaRuleOff': '未应用中国空闲规则：不再免除周末与法定节假日',
+  'controls.refresh': '刷新',
+  'controls.refreshing': '刷新中…',
+
+  'source.builtIn': '内置规则',
+  'source.unavailable': '无法验证',
+  'source.dataAge': '数据年龄',
+
+  'holiday.status.verified': '已验证',
+  'holiday.status.partial': '部分可用',
+  'holiday.status.off': '未应用',
+
+  'diagnostics.title': '诊断',
+  'diagnostics.officialRule': '官方规则出处',
+  'diagnostics.ruleTranscribed': '规则录入',
+  'diagnostics.scheduleStatus': '排期状态',
+  'diagnostics.holidayStatus': '节假日数据',
+  'diagnostics.holidayUnavailable': '节假日数据不可用，已退化为「仅周末规则」。高峰时段规则本身不受影响。',
+  'diagnostics.degradedNote': '存在可能删除或缩短高峰窗口的问题（window-drop），因此「空闲」结论已降级显示。',
+  'diagnostics.note': '说明',
+  'diagnostics.warnings': '解析警告',
+  'diagnostics.noWarnings': '没有警告',
+  'diagnostics.severity.windowDrop': '会丢失窗口',
+  'diagnostics.severity.ignoredPart': '已忽略的部分',
+  'diagnostics.pendingYears': '尚未公布年份',
+  'diagnostics.failedYears': '无法获取年份',
+  'diagnostics.coveredYears': '已覆盖年份',
+  'diagnostics.sourcePapers': '数据出处',
+  'diagnostics.expandedWindows': '展开窗口数',
+
+  'footer.disclaimer':
+    '高峰时段规则转录自 DeepSeek 官方定价页，节假日安排由第三方转载自国务院公告。本页与 DeepSeek 无任何关联，判断逻辑复刻自本地 macOS 应用。',
+  'footer.unknownPriority': '宁可显示「无法验证」，也不给出可能错误的「空闲」。',
+
+  'relative.justNow': '刚刚',
+  'relative.minutesAgo': '{count} 分钟前',
+  'relative.hoursAgo': '{count} 小时前',
+  'relative.daysAgo': '{count} 天前',
+
+  'weekday.1': '周日',
+  'weekday.2': '周一',
+  'weekday.3': '周二',
+  'weekday.4': '周三',
+  'weekday.5': '周四',
+  'weekday.6': '周五',
+  'weekday.7': '周六',
+
+  'reason.weekend': '周末',
+  'reason.holidayNamed': '{name}（法定节假日）',
+  'reason.makeUpNamed': '{name}（调休上班日）',
+
+  'duration.hours': '{count} 小时',
+  'duration.minutes': '{count} 分钟',
+  'duration.hoursMinutes': '{hours} 小时 {minutes} 分',
+};

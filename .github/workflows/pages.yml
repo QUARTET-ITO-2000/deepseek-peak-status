@@ -1,0 +1,49 @@
+name: pages
+
+# Publishes `web/` to GitHub Pages.
+#
+# The site is plain static files with no build step, so nothing is installed and
+# no bundler runs: the directory is uploaded exactly as it sits in the
+# repository. That is the whole point of the layout — `web/` is the artifact.
+#
+# This route exists because of the directory name. Pages' "deploy from a branch"
+# source accepts only `/` or `/docs`, so a `web/` directory cannot be published
+# that way; uploading it as an artifact bypasses the restriction, and Jekyll is
+# not run at all on this path.
+#
+# Triggered manually so publishing remains an explicit action. In the
+# repository's Pages settings, choose GitHub Actions as the publishing source.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+        with:
+          # Create the Pages site if it has never been enabled.
+          enablement: true
+
+      # No `node`, no `npm ci`, no build command: `web/` is already the site.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

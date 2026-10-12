@@ -1,0 +1,868 @@
+/*
+ * DeepSeek Peak Status — stylesheet.
+ *
+ * No build step, no framework, no webfont. Colours live in custom properties
+ * so the two schemes stay in one place and the inline SVG can be recoloured by
+ * CSS rather than by re-rendering.
+ *
+ * Peak is red and off-peak is green, matching the app. Because that pair is the
+ * classic red/green confusion axis, every chart also carries a second channel:
+ * peak regions are hatched, and every band, cell and day is labelled in text.
+ * The legend names all four states in words.
+ */
+
+/* MARK: - Tokens */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #ffffff;
+  --surface: #f7f7f5;
+  --surface-2: #f1efe8;
+  --text: #2c2c2a;
+  --text-muted: #5f5e5a;
+  --text-faint: #888780;
+  --border: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.26);
+
+  /* Chart fills. `.band--peak` and `.cell--peak` are deliberately NOT given a
+     `fill` in CSS: they carry `fill="url(#…hatch)"` as a presentation
+     attribute, and any CSS rule would outrank it. */
+  --peak-fill: #e24b4a;
+  --peak-hatch: #a32d2d;
+  --offpeak-fill: #cbe9da;
+  --suppressed-fill: #dcdad2;
+  --unknown-fill: #eae8e0;
+  --grid: rgba(0, 0, 0, 0.1);
+  --now: #185fa5;
+  --focus: #185fa5;
+
+  --card-offpeak-bg: #eaf6f0;
+  --card-offpeak-fg: #0f6e56;
+  --card-offpeak-accent: #1d9e75;
+  --card-peak-bg: #fcebeb;
+  --card-peak-fg: #a32d2d;
+  --card-peak-accent: #e24b4a;
+  --card-unknown-bg: #f1efe8;
+  --card-unknown-fg: #5f5e5a;
+  --card-unknown-accent: #888780;
+  --card-degraded-bg: #faeeda;
+  --card-degraded-fg: #854f0b;
+  --card-degraded-accent: #ba7517;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1b;
+    --surface: #242423;
+    --surface-2: #2c2c2a;
+    --text: #f1efe8;
+    --text-muted: #b4b2a9;
+    --text-faint: #888780;
+    --border: rgba(255, 255, 255, 0.14);
+    --border-strong: rgba(255, 255, 255, 0.3);
+
+    --peak-fill: #a32d2d;
+    --peak-hatch: #f09595;
+    --offpeak-fill: #10453a;
+    --suppressed-fill: #3a3936;
+    --unknown-fill: #2c2c2a;
+    --grid: rgba(255, 255, 255, 0.12);
+    --now: #85b7eb;
+    --focus: #85b7eb;
+
+    --card-offpeak-bg: #0d2e25;
+    --card-offpeak-fg: #5dcaa5;
+    --card-offpeak-accent: #1d9e75;
+    --card-peak-bg: #3a1212;
+    --card-peak-fg: #f09595;
+    --card-peak-accent: #e24b4a;
+    --card-unknown-bg: #2c2c2a;
+    --card-unknown-fg: #b4b2a9;
+    --card-unknown-accent: #888780;
+    --card-degraded-bg: #3a2a0b;
+    --card-degraded-fg: #ef9f27;
+    --card-degraded-accent: #ba7517;
+  }
+}
+
+/* MARK: - Base */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+}
+
+a {
+  color: var(--now);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/*
+ * `hidden` is only hidden because of a rule in the *user-agent* stylesheet.
+ * Every author declaration outranks every UA declaration regardless of
+ * specificity, so a single `display` on the element's own class silently
+ * defeats the attribute — `.countdown { display: flex }` did exactly that to
+ * `countdownRow.hidden = true`, leaving a stale countdown on screen while the
+ * card read "UNKNOWN".
+ *
+ * `!important` is load-bearing rather than lazy: `[hidden]` and `.countdown`
+ * both have specificity (0,1,0), so source order alone would decide it, and
+ * any rule appended later could take the guarantee away again.
+ */
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -48px;
+  z-index: 10;
+  padding: 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text);
+  transition: top 120ms ease-out;
+}
+
+.skip-link:focus {
+  top: 8px;
+}
+
+/* MARK: - Page frame */
+
+.page-header,
+.page-main,
+.page-footer {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding-top: 32px;
+  padding-bottom: 20px;
+}
+
+.page-title {
+  font-size: 20px;
+}
+
+.page-tagline {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.page-header__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+
+.button:disabled {
+  cursor: default;
+  color: var(--text-faint);
+}
+
+.page-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.page-footer {
+  padding-top: 24px;
+  padding-bottom: 48px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.page-footer p {
+  margin: 0 0 8px;
+}
+
+.page-footer__note {
+  color: var(--text);
+}
+
+.page-footer__meta {
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.noscript {
+  padding: 16px 18px;
+  background: var(--card-unknown-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+}
+
+/* MARK: - Boards */
+
+.board {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+}
+
+.board-title {
+  font-size: 15px;
+}
+
+.board-hint {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.chart-scroll {
+  overflow-x: auto;
+  margin-top: 14px;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chart--timeline {
+  min-width: 640px;
+}
+
+.chart--heatmap {
+  min-width: 700px;
+  max-width: 860px;
+}
+
+/* MARK: - Status card */
+
+.board--status {
+  padding: 24px;
+  border-color: transparent;
+  background: var(--card-unknown-bg);
+  color: var(--card-unknown-fg);
+}
+
+.board--status.is-offpeak {
+  background: var(--card-offpeak-bg);
+  color: var(--card-offpeak-fg);
+}
+
+.board--status.is-peak {
+  background: var(--card-peak-bg);
+  color: var(--card-peak-fg);
+}
+
+.board--status.is-degraded {
+  background: var(--card-degraded-bg);
+  color: var(--card-degraded-fg);
+}
+
+.status-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--card-unknown-accent);
+}
+
+.is-offpeak .status-dot {
+  background: var(--card-offpeak-accent);
+}
+
+.is-peak .status-dot {
+  background: var(--card-peak-accent);
+}
+
+.is-degraded .status-dot {
+  background: var(--card-degraded-accent);
+}
+
+.status-headline {
+  font-size: 30px;
+  letter-spacing: 0.02em;
+}
+
+.status-badge-row {
+  margin: 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--card-degraded-accent);
+  color: #ffffff;
+}
+
+.status-detail {
+  margin: 6px 0 0;
+  font-size: 15px;
+}
+
+.status-reason {
+  margin: 4px 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.status-window {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  opacity: 0.9;
+}
+
+.status-degraded-note {
+  margin: 10px 0 0;
+  font-size: 12px;
+  max-width: 62ch;
+}
+
+.countdown {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 18px 0 0;
+}
+
+.countdown-label {
+  font-size: 13px;
+}
+
+.countdown-value {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  animation: breathe 3.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+.clocks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  margin: 18px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid currentColor;
+  border-top-color: color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.clock-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.clock-label {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.clock-reading {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.clock-value {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-zone {
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+/* MARK: - Source strip */
+
+.source-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.source-pill {
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+
+/* The rule is compiled into the page, so `verified` is the only healthy status
+   left; the old online/cached pair is gone with the feed. */
+.source-pill--verified {
+  background: var(--card-offpeak-bg);
+  border-color: var(--card-offpeak-accent);
+  color: var(--card-offpeak-fg);
+}
+
+.source-pill--unavailable {
+  background: var(--card-unknown-bg);
+  color: var(--card-unknown-fg);
+}
+
+/* MARK: - Controls */
+
+.board--controls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.control-row input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--card-offpeak-accent);
+}
+
+.control-label {
+  font-size: 13px;
+}
+
+.control-note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* MARK: - Charts (inline SVG) */
+
+.chart text {
+  font-family: var(--font-sans);
+}
+
+.chart-caption {
+  font-size: 12px;
+  fill: var(--text-muted);
+}
+
+.axis-name {
+  font-size: 11px;
+  fill: var(--text-faint);
+}
+
+.tick-label {
+  font-size: 11px;
+  fill: var(--text-muted);
+}
+
+.tick-label--sub {
+  fill: var(--text-faint);
+}
+
+.grid-line {
+  stroke: var(--grid);
+  stroke-width: 1;
+}
+
+.track--offpeak {
+  fill: var(--offpeak-fill);
+}
+
+.track--unknown {
+  fill: var(--unknown-fill);
+}
+
+.hatch-base {
+  fill: var(--peak-fill);
+}
+
+.hatch-line {
+  stroke: var(--peak-hatch);
+  stroke-width: 1.5;
+}
+
+.now-line {
+  stroke: var(--now);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+
+.now-label {
+  font-size: 11px;
+  font-weight: 500;
+  fill: var(--now);
+}
+
+.cell {
+  stroke: none;
+}
+
+.cell--offpeak {
+  fill: var(--offpeak-fill);
+}
+
+.cell--suppressed {
+  fill: var(--suppressed-fill);
+}
+
+.cell--unknown {
+  fill: var(--unknown-fill);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+  stroke: var(--focus);
+  stroke-width: 2;
+}
+
+.day-date {
+  font-size: 11px;
+  fill: var(--text-muted);
+}
+
+.day-date.is-today {
+  font-weight: 500;
+  fill: var(--text);
+}
+
+.day-weekday {
+  font-size: 11px;
+  fill: var(--text-faint);
+}
+
+.day-name {
+  font-size: 11px;
+  fill: var(--card-degraded-fg);
+}
+
+.day-name.is-makeup {
+  fill: var(--text-faint);
+}
+
+/* MARK: - Legend */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border-strong);
+  flex: none;
+}
+
+.legend-swatch.is-peak {
+  background-color: var(--peak-fill);
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--peak-hatch) 0 1.5px,
+    transparent 1.5px 5px
+  );
+}
+
+.legend-swatch.is-offpeak {
+  background: var(--offpeak-fill);
+}
+
+.legend-swatch.is-suppressed {
+  background: var(--suppressed-fill);
+}
+
+.legend-swatch.is-unknown {
+  background: var(--unknown-fill);
+}
+
+.legend-swatch.is-now {
+  background: transparent;
+  border: 0;
+  border-left: 2px dashed var(--now);
+  border-radius: 0;
+}
+
+.legend-label {
+  font-size: 12px;
+}
+
+.legend-convention {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+  max-width: 82ch;
+}
+
+/* MARK: - Transitions */
+
+.transition-list {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.transition-item {
+  padding: 9px 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.transition-item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.transition-item--enter::before,
+.transition-item--leave::before,
+.transition-item--suppressed::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 9px;
+  border-radius: 50%;
+  vertical-align: 1px;
+}
+
+.transition-item--enter::before {
+  background: var(--peak-fill);
+}
+
+.transition-item--leave::before {
+  background: var(--offpeak-fill);
+  border: 1px solid var(--card-offpeak-accent);
+}
+
+.transition-item--suppressed::before {
+  background: var(--suppressed-fill);
+  border: 1px solid var(--border-strong);
+}
+
+.transition-item.is-empty {
+  color: var(--text-muted);
+}
+
+/* MARK: - Diagnostics */
+
+.board--diagnostics {
+  padding: 14px 20px;
+}
+
+.board--diagnostics > summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  list-style-position: outside;
+}
+
+.diagnostics-body {
+  margin-top: 12px;
+}
+
+.diagnostics-list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diagnostic-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+  gap: 4px 16px;
+  font-size: 12px;
+}
+
+.diagnostic-row dt {
+  color: var(--text-muted);
+}
+
+.diagnostic-row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.diagnostic-note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.diagnostic-note.is-degraded {
+  color: var(--card-degraded-fg);
+}
+
+.warning-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.warning {
+  padding-left: 10px;
+  border-left: 3px solid var(--border-strong);
+}
+
+.warning--drop {
+  border-left-color: var(--card-degraded-accent);
+}
+
+.warning--ignored {
+  border-left-color: var(--text-faint);
+}
+
+/* MARK: - Motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-value {
+    animation: none;
+  }
+
+  .skip-link {
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-header {
+    padding-top: 22px;
+  }
+
+  .status-headline {
+    font-size: 24px;
+  }
+
+  .countdown-value {
+    font-size: 26px;
+  }
+
+  .diagnostic-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

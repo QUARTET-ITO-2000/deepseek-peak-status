@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+
+# Left behind if a verification scenario is interrupted; the harness sweeps
+# them on the way out, but a hard kill can strand one.
+*.verify-backup

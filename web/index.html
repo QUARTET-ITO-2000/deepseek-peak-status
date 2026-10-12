@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeepSeek 峰谷状态 · 现在是否高峰时段</title>
+<meta name="description" content="查询 DeepSeek 当前是否处于高峰计费时段，并给出今天与未来 14 天的排期。高峰时段规则转录自官方定价页，判断逻辑复刻自本地 macOS 应用。">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="page-header">
+  <div class="page-header__text">
+    <h1 class="page-title" id="page-title">DeepSeek 峰谷状态</h1>
+    <p class="page-tagline" id="page-tagline">第三方查询页 · 与 DeepSeek 官方无关联</p>
+  </div>
+  <div class="page-header__actions">
+    <button type="button" class="button" id="language-toggle" aria-label="切换到英文">EN</button>
+    <button type="button" class="button" id="refresh-button">刷新</button>
+  </div>
+</header>
+
+<main class="page-main" id="main">
+  <div id="slot-status"></div>
+  <p class="source-strip" id="source-strip"></p>
+  <div id="slot-controls"></div>
+  <div id="slot-timeline"></div>
+  <div id="slot-heatmap"></div>
+  <div id="slot-transitions"></div>
+  <div id="slot-legend"></div>
+  <div id="slot-diagnostics"></div>
+
+  <noscript>
+    <p class="noscript">
+      本页需要 JavaScript 才能计算状态。关闭脚本时它不会退回为「空闲」——它什么也不说，
+      因为这正是本页唯一的诚实答案：无法验证时宁可显示「无法验证」，也不给出可能错误的价格判断。
+    </p>
+  </noscript>
+</main>
+
+<footer class="page-footer">
+  <p class="page-footer__disclaimer" id="footer-disclaimer">
+    高峰时段规则转录自 DeepSeek 官方定价页，节假日安排由第三方转载自国务院公告。本页与 DeepSeek 无任何关联，判断逻辑复刻自本地 macOS 应用。
+  </p>
+  <p class="page-footer__note" id="footer-unknown">宁可显示「无法验证」，也不给出可能错误的「空闲」。</p>
+  <p class="page-footer__meta">
+    判断引擎与 macOS 应用逐文件对应。
+    本页为纯静态站点，无构建步骤、无运行时依赖。
+  </p>
+</footer>
+
+<script type="module" src="src/ui/app.js"></script>
+</body>
+</html>

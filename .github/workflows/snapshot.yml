@@ -1,0 +1,52 @@
+name: snapshot
+
+# Refreshes the holiday documents that `web/data` falls back to.
+#
+# The peak-hours rule used to be mirrored here too; it is transcribed into
+# `web/src/sources.js` now, so the holidays are all that is left to refresh.
+#
+# Runs daily at 00:17 UTC (08:17 Beijing) and can be triggered by hand. It
+# commits and pushes its own result, so expect a bot commit most days — and
+# expect one within minutes of the repository's first push, if the schedule
+# happens to fire then.
+#
+# What it commits is the raw input plus a manifest, never a computed state: a
+# state depends on the instant and would be stale within hours, so the browser
+# recomputes it from the same bytes with the same engine.
+
+on:
+  schedule:
+    - cron: '17 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Refresh the bundled inputs
+        run: node tools/snapshot.mjs
+
+      - name: Commit only if something actually moved
+        run: |
+          if git diff --quiet; then
+            echo "No change — the upstream inputs are byte-identical."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/data
+          git commit -m "chore(snapshot): refresh upstream inputs [skip ci]"
+          git push
