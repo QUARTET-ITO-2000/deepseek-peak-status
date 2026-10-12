@@ -36,9 +36,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/configure-pages@v5
-        with:
-          # Create the Pages site if it has never been enabled.
-          enablement: true
 
       # No `node`, no `npm ci`, no build command: `web/` is already the site.
       - uses: actions/upload-pages-artifact@v3
