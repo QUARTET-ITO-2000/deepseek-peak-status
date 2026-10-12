@@ -119,6 +119,8 @@ export default {
     '高峰时段规则转录自 DeepSeek 官方定价页，节假日安排由第三方转载自国务院公告。本页与 DeepSeek 无任何关联，判断逻辑复刻自本地 macOS 应用。',
   'footer.unknownPriority': '宁可显示「无法验证」，也不给出可能错误的「空闲」。',
   'footer.meta': '判断引擎与 macOS 应用逐文件对应。本页为纯静态站点，无构建步骤、无运行时依赖。',
+  'footer.analytics': '访问统计：本站使用 Cloudflare Web Analytics 了解整体访问趋势和设备分布。Cloudflare 表示该服务不收集或使用访客个人数据。',
+  'footer.analyticsLink': '查看服务说明',
 
   'relative.justNow': '刚刚',
   'relative.minutesAgo': '{count} 分钟前',

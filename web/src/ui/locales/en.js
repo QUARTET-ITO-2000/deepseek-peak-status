@@ -126,6 +126,8 @@ export default {
     'The peak-hours rule is transcribed from the official DeepSeek pricing page; the holiday arrangement is republished from the State Council notices by a third party. This page is not affiliated with DeepSeek; its decision logic is ported from a local macOS app.',
   'footer.unknownPriority': 'An "unknown" answer is always preferred over a possibly wrong "off-peak".',
   'footer.meta': 'The decision engine matches the macOS app file by file. This is a static site with no build step or runtime dependencies.',
+  'footer.analytics': 'Analytics: This site uses Cloudflare Web Analytics to understand overall traffic and device trends. Cloudflare states that the service does not collect or use visitors’ personal data.',
+  'footer.analyticsLink': 'About the service',
 
   'relative.justNow': 'just now',
   'relative.minutesAgo': '{count} minutes ago',

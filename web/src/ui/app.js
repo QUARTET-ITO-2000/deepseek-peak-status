@@ -96,6 +96,7 @@ const refreshButton = document.getElementById('refresh-button');
 const footerDisclaimer = document.getElementById('footer-disclaimer');
 const footerNote = document.getElementById('footer-unknown');
 const footerMeta = document.getElementById('footer-meta');
+const footerAnalytics = document.getElementById('footer-analytics');
 const tailEasterEggButton = document.getElementById('tail-easter-egg');
 const tailEasterEggMessage = document.getElementById('tail-easter-egg-message');
 const sourceStrip = document.getElementById('source-strip');
@@ -387,6 +388,16 @@ function renderChrome(view) {
   footerDisclaimer.textContent = i18n.t('footer.disclaimer');
   footerNote.textContent = i18n.t('footer.unknownPriority');
   footerMeta.textContent = i18n.t('footer.meta');
+  replaceChildren(footerAnalytics, [
+    i18n.t('footer.analytics'),
+    ' ',
+    el('a', {
+      href: 'https://developers.cloudflare.com/web-analytics/about/',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      text: i18n.t('footer.analyticsLink'),
+    }),
+  ]);
 
   renderSourceStrip(view);
   renderLegend();
