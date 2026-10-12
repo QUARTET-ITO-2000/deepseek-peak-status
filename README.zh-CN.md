@@ -176,6 +176,6 @@ deepseek-peak-status/
 
 以 [MIT 许可证](LICENSE) 发布。
 
-`web/assets/` 中的鲸鱼娘插画是基于上善无形原创角色的二创，依 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 非商业使用，署名见网站页面。该协议适用于插画，不适用于源代码。
+`web/assets/` 中的鲸鱼娘插画基于上善无形原创角色和 ZipZipPipe 的视觉参考图改编，依 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 非商业使用，署名与原角色来源见网站页面。该协议适用于插画，不适用于源代码。
 
 Copyright © 2026 QUARTETTO D'ARCHI

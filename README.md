@@ -176,6 +176,6 @@ No. See [Not affiliated with DeepSeek](#not-affiliated-with-deepseek). The holid
 
 Released under the [MIT License](LICENSE).
 
-The whale-girl illustrations in `web/assets/` are derivative works based on the original character by 上善无形. They are provided under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) for non-commercial use, with attribution on the site; that license applies to the illustrations, not the source code.
+The whale-girl illustrations in `web/assets/` are derivative works based on the original character by 上善无形 and visual references by ZipZipPipe. They are provided under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) for non-commercial use, with attribution on the site; that license applies to the illustrations, not the source code. See the site for the original character source and attribution details.
 
 Copyright © 2026 QUARTETTO D'ARCHI

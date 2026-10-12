@@ -95,6 +95,7 @@ const languageButton = document.getElementById('language-toggle');
 const refreshButton = document.getElementById('refresh-button');
 const footerDisclaimer = document.getElementById('footer-disclaimer');
 const footerNote = document.getElementById('footer-unknown');
+const footerMeta = document.getElementById('footer-meta');
 const sourceStrip = document.getElementById('source-strip');
 
 const legendList = el('ul', { class: 'legend' });
@@ -378,6 +379,7 @@ function renderChrome(view) {
 
   footerDisclaimer.textContent = i18n.t('footer.disclaimer');
   footerNote.textContent = i18n.t('footer.unknownPriority');
+  footerMeta.textContent = i18n.t('footer.meta');
 
   renderSourceStrip(view);
   renderLegend();

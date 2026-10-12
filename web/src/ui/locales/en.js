@@ -13,13 +13,11 @@ export default {
 
   'credit.eyebrow': 'CHARACTER · ATTRIBUTION',
   'credit.title': 'Whale-girl character & licensing',
-  'credit.attribution': 'The whale-girl depiction is a derivative work based on an original character by 上善无形 (source:',
-  'credit.attributionEnd': '). Used non-commercially under CC BY-NC-SA 4.0; this derivative is shared under the same license.',
-  'credit.reference': 'Visual reference:',
-  'credit.referenceLink': 'Pixiv artwork 148186519',
-  'credit.referenceEnd': '. Its blue hair, gradient eyes, translucent fins, and cetacean tail inform the visual direction here.',
+  'credit.attribution': 'Character: the original whale-girl OC by 上善无形 (original post:',
+  'credit.attributionEnd': '). The creator welcomes attributed, non-commercial fan works and requires adaptations to be shared alike.',
+  'credit.reference': 'Direct visual references: four whale-girl fan illustrations by ZipZipPipe, based on the original character above. The status illustrations on this site adapt those references and the original character.',
   'credit.promptTitle': 'Original character note and prompt',
-  'credit.promptNotice': 'Whale-girl depiction. This content is licensed under CC BY-NC-SA 4.0.',
+  'credit.promptNotice': 'The whale-girl illustrations on this site are shared non-commercially under CC BY-NC-SA 4.0; adaptations include the status illustrations’ composition and depiction. Neither 上善无形 nor ZipZipPipe endorses this site.',
   'credit.licenseLead': 'This page is for non-commercial display.',
   'credit.licenseLink': 'CC BY-NC-SA 4.0',
   'credit.licenseEnd': ': attribution, non-commercial use, and share alike.',
@@ -120,6 +118,7 @@ export default {
   'footer.disclaimer':
     'The peak-hours rule is transcribed from the official DeepSeek pricing page; the holiday arrangement is republished from the State Council notices by a third party. This page is not affiliated with DeepSeek; its decision logic is ported from a local macOS app.',
   'footer.unknownPriority': 'An "unknown" answer is always preferred over a possibly wrong "off-peak".',
+  'footer.meta': 'The decision engine matches the macOS app file by file. This is a static site with no build step or runtime dependencies.',
 
   'relative.justNow': 'just now',
   'relative.minutesAgo': '{count} minutes ago',

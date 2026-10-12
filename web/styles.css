@@ -1078,8 +1078,12 @@ body {
   border-radius: 15px 15px 15px 5px;
   color: var(--now);
   background: color-mix(in srgb, var(--now) 9%, var(--surface));
-  font-size: 18px;
-  font-weight: 700;
+}
+
+.character-credit__mark svg {
+  width: 23px;
+  height: 23px;
+  fill: currentColor;
 }
 
 .character-credit__eyebrow {
