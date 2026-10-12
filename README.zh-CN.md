@@ -6,7 +6,7 @@
 
 ## 概述
 
-页面给出当前状态、距下次切换的倒计时、今天的 24 小时时间轴、未来 14 天的热力日历，以及一份用大白话写的切换预告。全部是静态文件：没有构建步骤、没有打包器、没有包管理器、没有运行时依赖。
+页面给出当前状态、距下次切换的倒计时、今天的 24 小时时间轴、未来 14 天的热力日历，以及一份用大白话写的切换预告。页面以静态文件发布：无需构建、打包、安装依赖或服务端运行时。`package.json` 提供可选的 Node 维护命令；页面运行时不会加载这些工具。
 
 判断逻辑是从本机一个 macOS 菜单栏 app **逐行移植**过来的，写法上力求与之一致。这个一致性就是整个项目的意义所在：一旦网页与 app 出现分歧，它就不只是没用，而是有害 —— 一个自信但错误的「空闲」，正是会让人按两倍价格去付费的东西。
 
@@ -57,7 +57,7 @@
 
 **如果变动涉及「哪几天算高峰」，先停手。** 星期那一半不在那个文件里，它在 `web/src/models/off-peak-calendar.js`；「应用中国空闲规则」这个开关正是由这个分工定义的。一旦日历开始带 `BYDAY`，`check-rule` 就会失败，所以不可能不小心漏掉。
 
-没有任何自动化把转录与官方页做比对 —— 见[已知盲区](#已知盲区)。
+没有任何自动化把转录与官方页做比对。GitHub Actions 每季度会创建一条提醒人工复核的 issue，但不会自动检测官方规则是否变化 —— 见[已知盲区](#已知盲区)。
 
 ## 功能
 
@@ -116,7 +116,7 @@ python3 -m http.server 8765
 
 ## 仓库结构
 
-模块树刻意与 Swift 源码**一个文件对一个文件**，读者可以直接把 `web/src/models/off-peak-calendar.js` 与 `OffPeakCalendar.swift` 放在一起 diff。
+JavaScript 实现从本机 macOS 应用逐文件移植而来。原始 Swift 源码不在本仓库中；这里展示的是网页实现。
 
 ```text
 deepseek-peak-status/
@@ -131,9 +131,9 @@ deepseek-peak-status/
 │   ├── data/                    # 随包的节假日兜底数据，每日刷新
 │   └── src/
 │       ├── sources.js           # 编译进页面的高峰规则，以及节假日数据源
-│       ├── support/             # zoned-date-time.js 是唯一没有 Swift 对应物的模块
-│       ├── models/              # 对应 Models/*.swift
-│       ├── services/            # 对应 Services/*.swift
+│       ├── support/             # 网页专用的辅助工具
+│       ├── models/              # 从本机应用的模型移植
+│       ├── services/            # 从本机应用的服务移植
 │       └── ui/                  # i18n、四块板块，以及 app.js
 └── tools/
     ├── check-rule.mjs           # 自检转录在 web/src/sources.js 里的规则
@@ -172,10 +172,12 @@ deepseek-peak-status/
 
 不是。见[与 DeepSeek 无任何关联](#与-deepseek-无任何关联)。节假日安排是第三方数据；高峰时段规则则是 DeepSeek 自己的，由本页手工转录。
 
-## 许可证
+## 许可证与插画署名
 
-以 [MIT 许可证](LICENSE) 发布。
+源代码以 [MIT 许可证](LICENSE) 发布。`web/assets/` 中的鲸鱼娘插画适用单独的授权条件，不包含在 MIT 许可证内。
 
-`web/assets/` 中的鲸鱼娘插画基于上善无形原创角色和 ZipZipPipe 的视觉参考图改编，依 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 非商业使用，署名与原角色来源见网站页面。该协议适用于插画，不适用于源代码。
+这些插画改编自上善无形的鲸鱼娘原创 OC，以及 ZipZipPipe 基于该角色创作的四张参考二创图，收录于此 [Pixiv 合集](https://www.pixiv.net/en/artworks/148349094)。原创角色及作者的[哔哩哔哩原帖](https://www.bilibili.com/opus/1231977657712771073)声明：二创须署名、不得用于商业目的，衍生作品须以相同方式共享。本项目的鲸鱼娘插画依 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 共享。
+
+转载或分享这些插画时，请署名上善无形（原创角色；[来源原帖](https://www.bilibili.com/opus/1231977657712771073)）和 ZipZipPipe（直接视觉参考；[Pixiv 合集](https://www.pixiv.net/en/artworks/148349094)），说明改动，采用相同的 CC BY-NC-SA 4.0 许可证，且不得用于商业目的。两位作者均未表示为本项目背书。
 
 Copyright © 2026 QUARTETTO D'ARCHI

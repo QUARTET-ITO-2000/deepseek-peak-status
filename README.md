@@ -6,7 +6,7 @@
 
 ## Overview
 
-The page shows the current state, a countdown to the next change, today's 24-hour timeline, the next 14 days as a heat map, and a plain-language list of upcoming transitions. It is pure static files: no build step, no bundler, no package manager, no runtime dependency.
+The page shows the current state, a countdown to the next change, today's 24-hour timeline, the next 14 days as a heat map, and a plain-language list of upcoming transitions. It is served as static files: no build step, bundler, dependency installation, or server-side runtime is needed. `package.json` provides optional Node-based maintenance commands; the page does not load those tools.
 
 The decision logic is a line-by-line port of a local macOS menu-bar app, written to match it. That agreement is the point of the project: if the page drifted from the app, it would be worse than useless, because a confident wrong "off-peak" is what talks someone into paying double.
 
@@ -57,7 +57,7 @@ Step 3 is the whole of the automated checking, and it deliberately does not know
 
 **If the change touches which days are peak, stop.** The weekday half of the rule does not live in that file. It lives in `web/src/models/off-peak-calendar.js`, and the "apply the China off-peak rule" switch is defined by that split. `check-rule` fails if the calendar starts carrying `BYDAY`, so this cannot be missed by accident.
 
-Nothing automated compares the transcription with the pricing page — see [Known blind spots](#known-blind-spots).
+Nothing automated compares the transcription with the pricing page. A quarterly GitHub Actions workflow opens a human review issue, but it does not check for changes itself — see [Known blind spots](#known-blind-spots).
 
 ## Features
 
@@ -116,7 +116,7 @@ The only same-origin thing the page fetches is `data/` inside its own directory,
 
 ## Repository layout
 
-The module tree deliberately mirrors the Swift sources one file to one file, so a reader can diff `web/src/models/off-peak-calendar.js` against `OffPeakCalendar.swift` directly.
+The JavaScript implementation was ported file by file from a local macOS app. The original Swift sources are not included in this repository; this tree contains the web implementation only.
 
 ```text
 deepseek-peak-status/
@@ -131,9 +131,9 @@ deepseek-peak-status/
 │   ├── data/                    # the bundled holiday fallback, refreshed daily
 │   └── src/
 │       ├── sources.js           # the compiled peak-hours rule, and the holiday source
-│       ├── support/             # zoned-date-time.js is the only module with no Swift counterpart
-│       ├── models/              # mirrors Models/*.swift
-│       ├── services/            # mirrors Services/*.swift
+│       ├── support/             # web-specific support utilities
+│       ├── models/              # ported from the local app's models
+│       ├── services/            # ported from the local app's services
 │       └── ui/                  # i18n, the four boards, and app.js
 └── tools/
     ├── check-rule.mjs           # checks the rule transcribed into web/src/sources.js
@@ -172,10 +172,12 @@ At least one `window-drop` warning was raised, meaning part of the rule could no
 
 No. See [Not affiliated with DeepSeek](#not-affiliated-with-deepseek). The holiday arrangement is third-party data; the peak-hours rule is DeepSeek's own, transcribed here by hand.
 
-## License
+## License and artwork attribution
 
-Released under the [MIT License](LICENSE).
+The source code is released under the [MIT License](LICENSE). The whale-girl illustrations in `web/assets/` have separate terms and are not covered by MIT.
 
-The whale-girl illustrations in `web/assets/` are derivative works based on the original character by 上善无形 and visual references by ZipZipPipe. They are provided under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) for non-commercial use, with attribution on the site; that license applies to the illustrations, not the source code. See the site for the original character source and attribution details.
+The illustrations are adaptations based on the original whale-girl OC by 上善无形 and four derivative reference illustrations by ZipZipPipe, collected in this [Pixiv artwork](https://www.pixiv.net/en/artworks/148349094). The original character and its creator's [Bilibili post](https://www.bilibili.com/opus/1231977657712771073) are subject to the creator's stated terms: credit the creator, use adaptations non-commercially, and share adaptations under the same terms. This project's whale-girl illustrations are shared under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+When reusing or sharing these illustrations, credit 上善无形 (original character; [source post](https://www.bilibili.com/opus/1231977657712771073)) and ZipZipPipe (direct visual references; [Pixiv collection](https://www.pixiv.net/en/artworks/148349094)), identify changes, use the same CC BY-NC-SA 4.0 license, and do not use them commercially. The creators do not endorse this project.
 
 Copyright © 2026 QUARTETTO D'ARCHI
