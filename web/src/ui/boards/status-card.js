@@ -29,7 +29,27 @@ const STATE_CLASS = {
   [PeakState.unknown]: 'is-unknown',
 };
 
+const MASCOT_ASSET = {
+  [PeakState.peak]: 'peak',
+  [PeakState.offPeak]: 'offpeak',
+  [PeakState.unknown]: 'unknown',
+};
+
+const MASCOT_URL = Object.fromEntries(
+  Object.entries(MASCOT_ASSET).map(([state, name]) => [
+    state,
+    new URL(`../../../assets/whale-girl-${name}.png`, import.meta.url).href,
+  ]),
+);
+
 export function createStatusCard() {
+  const mascot = el('img', {
+    class: 'status-mascot',
+    src: MASCOT_URL[PeakState.unknown],
+    alt: '',
+    'aria-hidden': 'true',
+    decoding: 'async',
+  });
   const dot = el('span', { class: 'status-dot', 'aria-hidden': 'true' });
   const headline = el('h2', { class: 'status-headline', id: 'status-headline' });
   const badge = el('span', { class: 'status-badge' });
@@ -61,10 +81,7 @@ export function createStatusCard() {
     ]),
   ]);
 
-  const element = el('section', {
-    class: 'board board--status',
-    'aria-labelledby': 'status-headline',
-  }, [
+  const content = el('div', { class: 'status-content' }, [
     el('div', { class: 'status-head' }, [dot, headline, badgeRow]),
     detail,
     reason,
@@ -73,6 +90,11 @@ export function createStatusCard() {
     countdownRow,
     clocks,
   ]);
+
+  const element = el('section', {
+    class: 'board board--status',
+    'aria-labelledby': 'status-headline',
+  }, [content, mascot]);
 
   /**
    * Cheap enough to run every second: it only assigns text and toggles classes,
@@ -86,6 +108,8 @@ export function createStatusCard() {
     element.classList.remove('is-offpeak', 'is-peak', 'is-unknown', 'is-degraded');
     element.classList.add(STATE_CLASS[state] ?? 'is-unknown');
     if (degraded && state === PeakState.offPeak) element.classList.add('is-degraded');
+    const mascotUrl = MASCOT_URL[state] ?? MASCOT_URL[PeakState.unknown];
+    if (mascot.src !== mascotUrl) mascot.src = mascotUrl;
 
     // `unknown` covers two situations that a reader experiences very
     // differently, so they get different captions: a load that is still

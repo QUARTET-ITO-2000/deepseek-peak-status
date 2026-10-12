@@ -11,6 +11,19 @@ export default {
   'app.languageSwitch': '中文',
   'app.languageSwitchLabel': 'Switch to Chinese',
 
+  'credit.eyebrow': 'CHARACTER · ATTRIBUTION',
+  'credit.title': 'Whale-girl character & licensing',
+  'credit.attribution': 'Character: the original whale-girl OC by 上善无形 (original post:',
+  'credit.attributionEnd': '). The creator welcomes attributed, non-commercial fan works and requires adaptations to be shared alike.',
+  'credit.reference': 'Direct visual references: four whale-girl fan illustrations by ZipZipPipe, based on the original character above, collected in this',
+  'credit.referenceLink': 'Pixiv collection',
+  'credit.referenceEnd': '. The status illustrations on this site adapt those references and the original character above.',
+  'credit.promptTitle': 'Original character note and prompt',
+  'credit.promptNotice': 'The whale-girl illustrations on this site are shared non-commercially under CC BY-NC-SA 4.0; adaptations include the status illustrations’ composition and depiction. Neither 上善无形 nor ZipZipPipe endorses this site.',
+  'credit.licenseLead': 'This page is for non-commercial display.',
+  'credit.licenseLink': 'CC BY-NC-SA 4.0',
+  'credit.licenseEnd': ': attribution, non-commercial use, and share alike.',
+
   'status.headline.offPeak': 'OFF-PEAK',
   'status.headline.peak': 'PEAK HOURS',
   'status.headline.unknown': 'UNKNOWN',
@@ -107,6 +120,7 @@ export default {
   'footer.disclaimer':
     'The peak-hours rule is transcribed from the official DeepSeek pricing page; the holiday arrangement is republished from the State Council notices by a third party. This page is not affiliated with DeepSeek; its decision logic is ported from a local macOS app.',
   'footer.unknownPriority': 'An "unknown" answer is always preferred over a possibly wrong "off-peak".',
+  'footer.meta': 'The decision engine matches the macOS app file by file. This is a static site with no build step or runtime dependencies.',
 
   'relative.justNow': 'just now',
   'relative.minutesAgo': '{count} minutes ago',

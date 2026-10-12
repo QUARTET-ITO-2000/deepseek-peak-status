@@ -95,6 +95,7 @@ const languageButton = document.getElementById('language-toggle');
 const refreshButton = document.getElementById('refresh-button');
 const footerDisclaimer = document.getElementById('footer-disclaimer');
 const footerNote = document.getElementById('footer-unknown');
+const footerMeta = document.getElementById('footer-meta');
 const sourceStrip = document.getElementById('source-strip');
 
 const legendList = el('ul', { class: 'legend' });
@@ -367,6 +368,9 @@ function midnightOf(now, timeZone) {
 
 function renderChrome(view) {
   document.documentElement.lang = i18n.language === 'zh' ? 'zh-Hans' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach((node) => {
+    node.textContent = i18n.t(node.dataset.i18n);
+  });
   pageTitle.textContent = i18n.t('app.title');
   pageTagline.textContent = i18n.t('app.tagline');
   languageButton.textContent = i18n.t('app.languageSwitch');
@@ -375,6 +379,7 @@ function renderChrome(view) {
 
   footerDisclaimer.textContent = i18n.t('footer.disclaimer');
   footerNote.textContent = i18n.t('footer.unknownPriority');
+  footerMeta.textContent = i18n.t('footer.meta');
 
   renderSourceStrip(view);
   renderLegend();

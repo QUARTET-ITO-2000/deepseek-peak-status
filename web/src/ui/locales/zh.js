@@ -10,6 +10,19 @@ export default {
   'app.languageSwitch': 'EN',
   'app.languageSwitchLabel': '切换到英文',
 
+  'credit.eyebrow': '角色 · 版权署名',
+  'credit.title': '鲸鱼娘形象与授权说明',
+  'credit.attribution': '角色原型：上善无形原创 OC「鲸鱼娘」（原帖：',
+  'credit.attributionEnd': '）。原作者声明欢迎署名、非商业二创，并要求衍生作品以相同方式共享。',
+  'credit.reference': '直接视觉参考：ZipZipPipe 基于上述原创角色创作的四张鲸鱼娘二创图，收录于',
+  'credit.referenceLink': 'Pixiv 合集',
+  'credit.referenceEnd': '。本站状态插画基于这些参考图及原创角色进行改编。',
+  'credit.promptTitle': '上善无形原创角色说明与提示词',
+  'credit.promptNotice': '本站鲸鱼娘插画按 CC BY-NC-SA 4.0 非商业共享；改编内容包括状态插画的构图与表现。上善无形与 ZipZipPipe 均未表示为本站背书。',
+  'credit.licenseLead': '本页面仅作非商业展示。',
+  'credit.licenseLink': 'CC BY-NC-SA 4.0',
+  'credit.licenseEnd': '：署名、非商业使用、相同方式共享。',
+
   'status.headline.offPeak': '空闲',
   'status.headline.peak': '高峰',
   'status.headline.unknown': '无法验证',
@@ -100,6 +113,7 @@ export default {
   'footer.disclaimer':
     '高峰时段规则转录自 DeepSeek 官方定价页，节假日安排由第三方转载自国务院公告。本页与 DeepSeek 无任何关联，判断逻辑复刻自本地 macOS 应用。',
   'footer.unknownPriority': '宁可显示「无法验证」，也不给出可能错误的「空闲」。',
+  'footer.meta': '判断引擎与 macOS 应用逐文件对应。本页为纯静态站点，无构建步骤、无运行时依赖。',
 
   'relative.justNow': '刚刚',
   'relative.minutesAgo': '{count} 分钟前',
