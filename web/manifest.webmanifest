@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "DeepSeek 峰谷状态",
+  "short_name": "峰谷状态",
+  "description": "查看 DeepSeek 当前高峰计费状态与未来排期。",
+  "lang": "zh-Hans",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#102b45",
+  "theme_color": "#102b45",
+  "icons": [
+    {
+      "src": "assets/whale-girl-unknown.png",
+      "sizes": "724x724",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

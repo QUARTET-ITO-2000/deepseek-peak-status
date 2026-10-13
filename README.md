@@ -112,6 +112,8 @@ Publish the `web/` directory. It is self-contained: no build, no install, no env
 - **Any static host** — Netlify, Vercel, Cloudflare Pages, S3, nginx — point the publish directory at `web/`.
 - **GitHub Pages** — the branch source accepts only `/` or `/docs`, so a `web/` directory needs the Actions route: `.github/workflows/pages.yml` uploads `web/` as the Pages artifact.
 
+Once deployed over HTTPS, open the site in Safari on iPhone or iPad, use Share, then choose “Add to Home Screen.” `web/manifest.webmanifest` provides the app name, colors, icon, and standalone display mode. A Service Worker and offline cache are not enabled yet, so holiday data continues to use the page's existing online-fetch and bundled-snapshot fallback behavior.
+
 The only same-origin thing the page fetches is `data/` inside its own directory, so it survives being served from a sub-path without any base-URL setting.
 
 ## Repository layout

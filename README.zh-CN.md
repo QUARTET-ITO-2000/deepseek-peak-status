@@ -112,6 +112,8 @@ python3 -m http.server 8765
 - **任意静态主机** —— Netlify、Vercel、Cloudflare Pages、S3、nginx —— 把发布目录指向 `web/`。
 - **GitHub Pages** —— 分支源只接受 `/` 或 `/docs`，所以 `web/` 要走 Actions 这条路线：`.github/workflows/pages.yml` 把 `web/` 作为 Pages artifact 上传。
 
+网站通过 HTTPS 发布后，可在 iPhone/iPad 的 Safari 中打开，点分享按钮并选择「添加到主屏幕」。`web/manifest.webmanifest` 将启动方式设为独立窗口，并提供应用名称、颜色和图标；Service Worker 与离线缓存目前未启用，因此节假日数据仍按网页当前逻辑在线获取并在失败时使用随包快照。
+
 页面运行时唯一会从自己 origin 取的东西，是它自己目录下的 `data/`，所以放在子路径下也能正常工作，不需要任何 base URL 配置。
 
 ## 仓库结构
