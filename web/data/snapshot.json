@@ -1,7 +1,7 @@
 {
   "_comment": "Raw upstream holiday inputs only. No computed state: a state depends on the instant and the browser recomputes it. Bookkeeping for tools/snapshot.mjs; the page never reads this file.",
   "generatedAt": 1791712286899,
-  "checkedAt": 1791873936236,
+  "checkedAt": 1791953411517,
   "holidays": {
     "2026": {
       "url": "https://cdn.jsdelivr.net/gh/NateScarlet/holiday-cn@master/2026.json",
