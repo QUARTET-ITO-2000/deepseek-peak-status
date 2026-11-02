@@ -24,7 +24,7 @@ export const OfficialRule = Object.freeze({
    * answer left: the rule is a constant, so its freshness is how long ago a
    * human compared it with the source, not how long ago a request succeeded.
    */
-  transcribedOn: '2026-10-12',
+  transcribedOn: '2026-11-02',
 
   /**
    * The rule as an iCalendar document.
