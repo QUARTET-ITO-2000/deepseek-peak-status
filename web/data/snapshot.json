@@ -1,7 +1,7 @@
 {
   "_comment": "Raw upstream holiday inputs only. No computed state: a state depends on the instant and the browser recomputes it. Bookkeeping for tools/snapshot.mjs; the page never reads this file.",
-  "generatedAt": 1791712286899,
-  "checkedAt": 1793860882541,
+  "generatedAt": 1793947111081,
+  "checkedAt": 1793947111081,
   "holidays": {
     "2026": {
       "url": "https://cdn.jsdelivr.net/gh/NateScarlet/holiday-cn@master/2026.json",
@@ -11,9 +11,9 @@
     },
     "2027": {
       "url": "https://cdn.jsdelivr.net/gh/NateScarlet/holiday-cn@master/2027.json",
-      "etag": "W/\"ec-f0a39993f252d761\"",
-      "sha256": "48508807bad1d9ab27f761bac71970789fa70eabe5b390f5432aa3318dd21593",
-      "notModified": true
+      "etag": "W/\"10a4-5a32baad0780b339\"",
+      "sha256": "1dec7120abb4c328cc88bf596ac5ef448b5d674c1840fa244b2da4a303c1bb9d",
+      "notModified": false
     }
   }
 }
